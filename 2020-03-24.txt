@@ -1,0 +1,48 @@
+﻿1.instanceof 연산자
+  참조변수가 참조하고 있는 인스턴스의 실제 타입을 알아보기 위해 instanceof 연산자를 사용한다. 주로 조건문
+ 에 사용되며 연산 결과로 boolean값인 true 혹은 false가 반환된다.
+ 예) Iphone p = new Iphone();
+     	p instanceof Iphone -----> true
+	p instanceof Galaxy -----> false
+
+2.다형성
+  부모타입의 참조변수로 자식객체를 참조하고 있을 때 자식객체에 재정의된 메서드를(오버라이드) 
+ 실행 할때 부모 클래스의 메서드가 실행되는게 아닌 형변환 없이 그 자식이나 자손의 재정의된 메서드가 
+ 호출된다. (오버라이드 에서만 해당된다.)  
+   예) public class Dataoutput {	|	public class ConsoleOutput extends Dataoutput{
+       	   void output() {		|		@override
+               수행문1;			|		void output() {
+	   }				|			수행문2;
+       }				|		}
+       					|	}
+
+	Dataoutput outputer = new ConsoleOutput();
+       	outputer.output();           <------ 호출하게 되면 "수행문2" 가 실행된다.
+					    만약 ConsoleOutput에 output 메서드가 재정의(오버라이드) 
+				            되있지 않으면 "수행문1"이 실행된다. 
+
+ * 모든 클래스에 있는 메서드는 재정의(오버라이드) 관계로 만든다. 그럼 추후 같은 조상클래스를 가지고 있는
+  객체만 바꿔주면 여러가지 방식으로 코드를 바꿀 수 있다. 그래서 instenceof 연산자나, 클래스 형변환은 잘
+  사용하지 않는다. 이를 사용하게 되면 다시 한번 코드를 생각해보자.
+ 
+3.객체 지향 설계   ------ 추후 더 자세히
+ S.O.L.I.D
+ S - SRP 단일 책임 원칙 (Single responsibility principle)
+ O - OCP 개방 - 폐쇄 원칙 (Open/closed principle)
+ L - LSP 리스코프 치환 원칙 (Liskov substitution principle)
+ I - ISP 인터페이스 분리 원칙 (Interface segregation principle)
+ D - DIP 의존관계 역전 원칙 (Dependency inversion principle)
+
+4.추상화
+ 추상 메서드 : - 메서드에 선언부와 구현부(몸통)로 구성되어 있는데, 구현부(몸통)가 없고 선언부만 있는걸
+	      추상 메서드라고 한다. 
+	     -------  abstract 리턴타입 메서드이름(); --------
+        예)  abstract class Player {		 <------ 추상 클래스
+		abstract void play();	     	
+     }
+
+  **** 추상화는 자식클래스가 특정 기능의 구현을 재정의 하도록 강요하는 것이다. 
+    상속과 오버라이드에서는 부모클래스를 추상클래스로 만들면, 자식 클래스에서 꼭 메서드 재정의를 해줘야만
+   컴파일이 되서 오류가 안생긴다.
+  **** 자식클래스들이 공통으로 가지는 기능을 구현해 놓음으로써 자식클래스의 구현부담을 감소 시킨다.
+  **** 추상클래스는 new 키워드를 사용해서 객체 생성할 수 없다.
