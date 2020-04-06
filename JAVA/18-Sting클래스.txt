@@ -1,0 +1,104 @@
+﻿1.String클래스
+	- 문자열을 표현하는 객체다.
+	- 문자열(String)은 불변객체다.
+          * 한번 생성된 문자열은 절대로 변하지 않는다.
+	- String객체를 생성하는 방법
+		String s = "abc";
+		String s = new String("abc");
+
+		char[] data = {'a', 'b', 'c'};
+		String s = new String(data);
+	- String객체는 문자열과 관련된 다양한 기능들을 제공한다.
+
+	- 문자열 리터럴 형식으로 문자열을 만들면, 같은 리터럴값을 가지고 있는 변수들은 그 값이 만들어진 객체
+	  만 참조 하게 된다.
+		s1 = "AAA"  
+		s2 = "AAA"  --->  AAA 값을 가진 객체 (상수저장소)
+		s3 = "AAA"
+
+	*** String의 주요 메소드 ***
+	- int		length()
+			문자열의 길이를 반환한다.
+	- boolean	equals(Object str)
+			문자열의 내용을 비교해서 동등성 여부를 반환한다.
+	- boolean 	equalsIgnoreCase(String other) 
+			대소문자를 구분하지 않고 비교해서 그 결과를 반환한다.
+	- boolean	isEmpty()
+			문자열의 길이가 0인 경우 true를 반환한다.
+	- boolean 	contains(CharSequence s)
+			지정된 문자열이 포함되어 있으면 true를 반환한다.
+	- int		indexOf(String str)
+			지정된 문자열이 처음으로 등장하는 위치를 반환한다.
+	- int 		lastIndexOf(String str)
+			지정된 문자열이 마지막으로 등장하는 위치를 반환한다.
+	- String	substring(int beginIndex)
+			지정된 위치부터 끝까지의 문자열을 새로 만들어서 반환한다.
+	- String 	substring(int beginIndex, int lastIndex)
+			지정된 시작위치부터 끝위치 앞까지의 문자열을 새로 만들어서 반환한다.
+	- String	replace(CharSequenct target, CharSequence replacement)
+			대상 문자열을 지정된 문자열로 대체한 새로운 문자열을 반환한다.
+	- String 	replaceAll(String regex, String replacement)
+			정규표현식에 해당하는 대상문자열을 지정된 문자열로 대체한 새로운 문자열을 반환한다.
+	- String 	toLowerCase()
+			문자열을 소문자로 새로 만들어서 반환한다.
+	- String 	toUpperCase()
+			문자열을 대문자로 새로 만들어서 반환한다.
+	- String	trim()
+			문자열의 좌우 불필요한 공백이 제거된 새로운 문자열을 만들어서 반환한다.
+	- boolean 	startsWith(String prefix)
+			문자열이 지정된 문자열로 시작하면 true를 반환한다.
+	- boolean 	endsWith(String suffix)
+			문자열이 지정된 문자열로 끝나면 true를 반환한다.
+	- String[] 	split(String regex)
+			문자열을 지정된 구분문자열로 잘라서 각각의 요소를 배열에 담아서 반환한다.
+	- int 		compareTo(String other)
+			지정된 다른 문자와 사전 순서대로 비교한다
+			abc	abc 	---> 0
+			abc	xyz	---> 음수
+			xyz	abc	---> 양수
+	- char		charAt(int index)
+			문자열에서 지정된 위치의 글자를 문자로 반환한다.
+	- String 	valueOf(다양한 값)
+			- 전달받은 다양한 타입의 값을 문자열로 바꿔서 반환한다.
+			- 정적메소드다.
+
+	1) split()과 StringTokenizer의 차이
+		* 프로그램에서 token은 길이가 긴 값을 일정한 길이(특정 값)로 나누는걸 말한다.
+
+		- split() 은 빈문자열도 나눠서 표현하지만
+		- StringTokenizer은 나누는과정에서 빈문자열이 있으면 필요없는 값이라고 생각하여 나누지 않고
+		다음 값으로 넘어간다.
+	
+	2) join()과 StringJoiner
+		- String.join(CharSequence 구분자, CharSequence... element) <- 가변길이 매개변수 (배열 혹은 여러개 문자열)
+		  전달받은 엘리먼트들을 지정된 구분자로 이어붙인다.
+
+		- Stringjoiner
+			new StringJoiner(CharSequence 구분자)
+			new StringJoiner(CharSequence 구분자, CharSequence 접두사, CharSequence 접미사)
+			void add(CharSequence item) : StringJoiner에 아이텀을 추가한다.
+			tring toString() : StringJoiner에 추가된 아이템을 전부 이어붙여서 문자열로 반환한다.
+	
+	3) StringBulider와 StringBuffer
+		둘 객체 모두 문자열을 다루기 위한 객체다.
+		내부에 버퍼(저장소)를 가지고 있어서, 문자열을 추가, 변경, 삭제하는 것이 가능하다.
+		
+		- 주요 메서드
+			StringBuilder append(다양한타입 값) 
+				: 맨 뒤에 붙인다.
+			StringBuilder delete(int begin, int end) 
+				: 지정된 범위의 문자열을 삭제한다.
+			StringBuilder insert(int position, 다양한타입 값) 
+				: 지정된 위치에 문자열을 삽입한다.
+			StringBuilder replace(int start, int end, String str) 
+				: 지정된 범위의 문자열을 새 문자열로 변경한다.
+			String toString() 
+				: 버퍼에 저장된 값을 하나의 문자열로 반환한다.
+
+		* StringBuilder와 StringBuffer는 메서드체이닝을 지원한다.
+			StringBuffer sb1 = new StringBuffer();
+			String resultText = sb1.append("이름:")
+						.append(name)
+						.append(", 전화번호:")
+						.append(tel)
+						.toString();

@@ -1,0 +1,116 @@
+﻿1.Calendar클래스
+	: 추상클래스라서 new연산자를 이용해서 객체 생성을 할 수 없다.
+	  (getInstance) 를 사용해서 객체를 만든다.
+		Calendar cal = Calendar.getInstance();		<--- 객체생성
+		
+		int year = cal.get(Calendar.YEAR);		<--- 년
+		int month = cal.get(Calendar.MONTH);		<--- 월 (0부터 시작한다. 4월 : 3을 표시)
+		int day = cal.get(Calendar.DAY_OF_MONTH);	<--- 일
+		int hour = cal.get(Calendar.HOUR);		<--- 시
+		int minute = cal.get(Calendar.MINUTE);		<--- 분
+		int second = cal.get(Calendar.SECOND);		<--- 초
+		
+		int week = cal.get(Calendar.DAY_OF_WEEK);	// 1~7 1:일요일
+
+2.Date
+	: date객체를 생성하면 시스템의 현재 시간정보를 포함한 객체가 생성된다.
+	- 주요 생성자
+		new Date();		  // 현재 날짜와 시간정보를 포함하는 객체생성
+		new Date(long time);	  // 전달받은 유닉스타입에 해당하는 날짜 시간정보를 포함한 객체 생성
+	- 주요 메서드	
+		long 	getTime()		  // 유닉스타임을 반환
+		boolean before(Date when) // when으로 전달받은 날짜보다 이전날짜이면 true 반환
+		boolean after(Date when)  // when으로 전달받은 날짜보다 이후날짜이면 true 반환
+
+	- 1970-01-01 00:00:00 이후로부터 Date객체가 가르키는 시간까지의 밀리초값
+		long unixTime = now.getTime();	   <----밀리초값이란 unixTime 즉 시간에 x1000을 한 값이다.
+					
+		unixTime = System.currentTimeMillis();	    <----- unixTime을 알아내느 또다른 방법	
+
+2.형식화 클래스(SimpleDateFomat / DecimalFormat)
+1)SimpleDateFomat
+	: Date를 원하는 형식의 문자열로 날짜를 표현할 수 있다.
+	
+	- 주요메서드
+		날짜를 지정된 형식의 텍스트로 변환
+		String format(Date day)
+		
+		지정된 형식의 텍스트를 날짜로 변환
+		Date parse(String text)
+	- 예시 :
+		Date today = new Date();
+		
+		SimpleDateFormat df = new SimpleDateFormat("a h:m:s");
+		String formatedDateText1 = df.format(today);
+
+		패턴			출력내용	출력값
+		* --------------------------------------------------
+		* yyyy			년		2020
+		* MM			월		04		 1~9까지 01,02,......09로 표현
+		* M			월		4
+		* dd			일		06
+		* d			일		6
+		* yyyy-MM-dd				2020-04-06
+		* yyyy.M.dd				2020.4.06
+		* yyyy년 M월 dd일			2020년4월6일
+		* EEEE			요일		월요일
+		* a			오전/오후	오전
+		* HH(H)			0~23시
+		* hh(h)			1~12시
+		* mm(m)			0~59분
+		* ss(s)			0~59초
+		* S			0~999		밀리초
+
+	1) 지정된 날짜 형식으로 작성된 문자열을 Date로 변환하기
+		String text = "1991.11.21";
+		SimpleDateFormat df = new SimpleDateFormat("yyyy.M.d");
+		Date date = df.parse(text);
+		값: Thu Nov 21 00:00:00 KST 1991
+
+	2) 날짜 계산기 (기념일 계산)
+		Date today = new Date();				<--- 오늘 날짜 객체 생성
+		final long ONE_DATE_TIME = 60*60*24*1000;		<--- 하루를 unixtime으로 계산
+		SimpleDateFormat df = new SimpleDateFormat("yyyy.M.d"); <--- 형식 지정하기
+		
+		String text = 원하는 날짜;
+		Date memoriaDay = df.parse(text);	 <--- 입력한 날짜를 지정된 형식으로 Date객체 생성
+			
+		long todayTime = today.getTime();		<--- 오늘 날짜의 unixtime 값 얻기
+		long memoriaDayTime = memoriaDay.getTime(); 	<--- 입력한 날짜의 unixtime 값 얻기
+			
+		long dayCount = (todayTime - memoriaDayTime)/ONE_DATE_TIME;	<--- 일수가 획득됨
+
+2)DecimalFormat
+	: 숫자를 지정된 형식의 텍스트로 변환.
+		String format(double number);
+		String format(long number);
+
+	  지정된 형식의 텍스트를 숫자로 변환.	
+		Number format(String text)
+	
+		  기호	의미			설명
+ 	  	----------------------------------------------------------
+ 		*  0	숫자		해당위치에 숫자 없어도 0을 표시한다.
+ 		*  #	숫자		해당위치에 숫자가 없으면 표시하지 않는다.
+ 		*  .	소숫점			
+ 		*  ,	단위구분자
+
+	예시:	
+		double number = 1234567.89;
+		DecimalFormat df = new DecimalFormat("형식넣기");
+		String text = df.format(number);
+		 
+		   형식			   결과값
+		-------------------------------------
+		 *  "0"			   1234568
+		 *  "#"			   1234568
+		 *  "0000000000"	0001234568
+		 *  "##########"	   1234568
+		 *  "0.0"		   1234567.9
+		 *  "#.#"		   1234567.9
+		 *  "0.000"		   1234567.890
+		 *  "#.###"		   1234567.89
+		 *  "0,000"		 1,234,568
+		 *  "#,###"		 1,234,568
+		 *  "0,000.000"		 1,234,567.890
+		 *  "#,###.###"		 1,234,567.89

@@ -1,0 +1,37 @@
+﻿1.래퍼(wrapper)클래스
+	- 기본자료형 타입에 대응되는 클래스다.
+	- 기본자료형 값을 가지고 있는 객체를 만들 수 있다.
+	- java.lang 패키지에 정의되어 있다.
+
+	- 사용해야 할 때
+		- 기본자료값이 아닌 객체로 저장해야할 때
+		- 호출할 메소드의 매개변수가 객체를 요구할 때
+		- 사용자의 입력값을 저장하는 변수를 만들 때
+		  * 사용자의 입력여부에 따라서 실제입력값 혹은 null을 저장할 수 있기 때문에
+		- 해당 기본자료형값에 대한 다양한 기능을 실행해야 할 때
+	- 지원하는 Wrapper 클래스
+		Byte, Short, Integer, Long
+		Float, Double	
+		Character
+		Boolean
+
+    ****** 문자열과 기본자료형간에 변환 ******
+
+	기본자료형		     문자열		문자열			         기본자료형
+	--------------------------------------------------------------------------------------------
+	String.valueOf(123)  ---->   "123"	    Integer.parseInt("123")	  ----->  123
+	String.valueOf(3.14) ---->   "3.14"	    Double.parseDouble("3.14")    ----->  3.14
+	String.valueOf(true) ---->   "true"         Boolean.parseBoolean("true")  ----->  true
+	String.valueOf('A')  ---->   "A"
+
+
+** String 과 Integer, Long, Double
+	: 정수를 문자열로 변환하기
+		String.valueOf(int number)
+		String.valueOf(long number)
+		String.valueOf(double number)
+
+	  텍스트를 숫자로 변환하기 (* 텍스트에 숫자 아닌 내용이 포함되어 있으면 오류 발생)
+		int 	Integer.parseInt(String text)
+		long 	Long.parseLong(String text)
+		doulbe	Double.parseDouble(String text)
