@@ -1,0 +1,50 @@
+﻿Map<K, V> 인터페이스
+	- Key(이름)와 Value(값)을 하나의 쌍으로 묶어서 저장하는 객체들의 표준이 설계된 인터페이스이다
+	- Key는 중복될 수 없다.
+	- K는 key(상징)의 타입
+	- V는 Value(객체, 실제 데이터, 실제 사용할 객체)의 타입
+	
+	- 주요 메소드
+		- V 		put(K key, V value) :
+				key, value의 쌍을 값을 저장한다. 동일한 이름의 key가 존재하면 value를 덮어쓴다.
+		- V		get(Object key) :
+				key에 해당하는 value를 조회한다.
+		- V		remove(Object key)
+				Map에서 지정된 key에 해당하는 Entry를 삭제한다.
+		- void		clear() :
+				모든 key, value의 쌍을 삭제한다.
+		- int 		size()	:
+				Map객체에 저장된 객체의 갯수를 반환한다.
+		- boolean	isEmpty() :
+				Map객체에 저장된 value가 하나도 없으면 true를 반환한다.
+		- boolean	containsKey(Object key) :
+				지정된 key와 일치하는 key가 있으면 true를 반환한다.
+		- boolean	containsValue(Object value) :
+				지정된 value와 일치하는 value가 있으면 true를 반환한다.
+		- Set<K>	keySet() :
+				Map에 저장된 모든 key를 Set객체에 담아서 반환한다.
+		- Set<Entry<K, V>> entrySet() :
+				Map에 저장된 모든 Entry(키와값의 쌍)을 Set에 담아서 반환
+		- Collection<V>	values()
+				Map객체의 모든 value를 Collection객체에 담아서 반환한다.
+	- 주요 구현 클래스
+		- HashMap 	: 가장 많이 사용하는 구현 클래스다.
+		- HashTable	: HashMap과 사용법은 동일하지만, 멀티스레드환경에서 안전하다.
+		- TreeMap	: Key를 기준으로 오름차순 정렬한다.
+
+
+	* Map의 장점:
+		- Map에서 V에 해당하는 타입을 Object로 지정하는 경우
+		 여러 종류의 값을 저장하는 용도로 Map을 사용할 수 있다.
+			HashMap<String, Object> data = new HashMap<String, Object>();
+			data.put("no", 100);
+			data.put("title", "자바의 정석");
+			data.put("discountRate", 0.05);
+			data.put("incomeDate", new Date());
+			
+			* 단점은 V의 타입을 Object로 지정하는 경우 값을 꺼낼 때 반드시 해당값을 맞는 타입으로 
+ 			 형변환이 필요하다.
+			int no = (int) data.get("no");
+			String title = (String) data.get("title");
+			data.put("discountRate", 0.05);
+			data.put("incomeDate", new Date());

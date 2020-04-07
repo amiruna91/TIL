@@ -55,3 +55,13 @@
 			- LinkedList<E> : 더블링크로 List를 구현한 클래스(요소의 추가/삭제 성능이 우수하다.)
 			- Vector<E>	: ArrayList와 유사하는 List구현 클래스(멀티스레드 환경에 안전하다.)
 			- Stack<E>	: LIFO(Last-In-First-Out)으로 구현된 List구현 클래스
+
+	Iterator<E>
+		- Collection<E>에 저장된 객체를 하나씩 꺼내는데 필됴한 기능을 제공하는 인터페이스다.
+	      	 모든 Collection<E>의 구현클래스(ArrayList, HashSet, LinkedList, Vector, Stack,TreeSet 등)
+		 Iterator객체를 반환하는 iterator() 메서드가 존재한다.
+		* Iterator객체는 해당 콜렉션 객체에 저장된 객체를 하나씩 꺼내도록 구현되어 있다.
+		주요 메서드:
+			boolean	hasNext()	: 꺼낼 다음번 객체가 있으면 true를 봔환
+			E	next()		: 다음번 객체를 꺼낸다.
+			void remove()		: 현재 객체를 삭제한다.
