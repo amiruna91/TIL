@@ -1,0 +1,65 @@
+﻿값 정렬하기(Comparable 와 Comparator)
+
+1.배열, 콜렉션의 값 정렬하기
+	배열
+		Arrays.sort(배열);
+	set
+		TreeSet에 값ㅇ르 저장하면 자동으로 정렬되어서 저장된다.
+	List
+		Collecitons.sort(리스트);
+	* 배열, TreeSet, List에 저장되는 객체가 정렬되기 위해서는 
+	 Comparable<E> 인터페이스를 구현해야 한다.
+	
+	* Comparable<E> 인터페이스를 구현한 주요 클래스
+		- 모든 Wrapper 클래스 (Byte, Short, Integer, Long, Float, Double, Boolean, Character)
+		- String, Date, File
+
+2.정렬이 가능한 객체로 만들기 
+	Comparable<T> 인터페이스를 구현해야 한다.
+		int compareTo(T t)
+		* T는 비교대상이 되는 클래스를 적는다.
+		  비교대상은 항상 이 객체와 똑같은 다른 객체를 비교하는 것이기 때문에
+		  comparable를 구현하는 클래스의 이름을 적으면 된다.
+		* compareTo() 메서드는 현재 객체와 다른 객체를 비교해서
+			현재 객체의 값이 다른 객체의 값보다 크면 0보다 큰정수
+			현재 객체의 값과 다른 객체의 값이 같으면 0
+			현재 객체의 값이 다른 객체의 값보다 작으면 0보다 작은 정수를 반환한다.
+		* 배열, List<E>, TreeSet<E>에 저장된 객체를 정렬할 수 있다.
+
+	예시:
+	public class Score implements comparable<Score> {
+		private int no;
+		private String name;
+		private int totalScore;
+
+		// compareTo(T t) 재정의하기
+		public int comapreTo(Score other) {
+			return this.totalScore - other.totalScore;
+		}
+	}
+
+3.객체를 비교할 수 있는 비교기를 만들어서 객체를 정렬하기
+	Comparator<T> 인터페이스를 구현한 비교기를 사용해서 객체들을 정렬한다.
+		int compare(T o1, T o2)
+		* T는 비교대상이 되는 클래스를 적는다.
+		  비교기는 비교대상이 되는 객체 2개를 전달받아서 비교한다.
+		* Arrays.sort(배열, 비교기), Collections.sort(리스트, 비교기)
+		* TreeSet<T> set = new TreeSet<E>(비교기)
+
+	예시: 
+	public class Score {
+		private int no;
+		private String name;
+		private int totalScore;
+	}
+	
+	ArrayList<Score> scores = new ArrayList<Score>();
+	// 비교기는 익명객체의 형태로 주로 사용된다.
+	Collections.sort(scores, new Comparator<Score>() {
+		@Override
+		public int compare(Score s1, Score s2) {
+			return s1.getTotalScore() - s2.getTotalScore();
+	});
+	
+	// java8의 람다식으로 비교기 구현하기
+	Collections.sort(scores, (s1, s2) -> s1.getTotalScore() - s2.getTotalScore());
