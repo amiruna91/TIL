@@ -1,0 +1,36 @@
+﻿보조스트림 / 브릿지스트림
+
+보조스트림
+	: 스트림의 성능 향상 및 추가 기능을 제공한다.
+	
+	- 종류
+		BufferedInput(Output)Stream, FilterInput(Output)Stream 등
+		BufferedReader(Writer), FilterReader(Writer) 등
+
+	예)
+	  1) FileInputStream fis = new FileInputStream("c:/files/javaIsSimple.pdf");
+	     FileOutputStream fos = new FileOutputStream("c:/files/javaIsSimple_copy.pdf");
+		
+	     BufferedInputStream bis = new BufferedInputStream(fis);
+	     BufferedOutputStream bos = new BufferedOutputStream(fos);
+
+	  2) FileReader fr = new FileReader("c:/files/데이터.txt");
+	     BufferedReader br = new BufferedReader(fr);
+
+	  3) 2번보다 간단하게 표현할 수 도 있다.
+           BufferedReader reader = new BufferedReader(new FileReader("c:/files/데이터.txt"));	
+	
+브릿지스트림(BridgeStream)
+	: 바이트스트림과 캐릭터스트림을 연결해주는 스트림
+	 InputStream과 Reader, OutputStream과 Writer를 연결해주는 스트림
+	
+	- 종류
+		- InputStreamReader
+			- InputStream과 Reader를 연결해주는 스트림
+			- 생성자
+				InputStreamReader(InputStream in)
+				InputStreamReader(InputStream in, String charsetName)
+		예)
+		   ileInputStream fis = new FileInputStream("파일명");
+		   InputStreamReader isr = new InputStreamReader(fis, "MS949"); 
+		   BufferedReader reader = new BufferedReader(isr);
