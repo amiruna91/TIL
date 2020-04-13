@@ -1,0 +1,75 @@
+﻿열거형(Enum)
+	- 열거형은 여러 개의 상수를 빠르게 정의할 수 있다.
+	- 열거형은 컴파일시 값이 체크된다.
+	- 열거형은 java.lang.Enum 클래스로부터 다양한 메서드를 상속받았다.
+	* 선언 : public enum 열거형 이름 {
+			상수명1, 상수명2, 상수명3,.....
+		 }
+
+	주요메서드:
+		String 	name()	
+				: 열거형 상수의 이름을 문자열로 반환한다.
+		int 	ordinal()
+				: 열거형 상수가 정의된 순서를 반환한다(0부터 시작)
+		static T Enum.valueOf(Class<T> enumType, String name)	
+				== static T valueOf(String name) 
+				: 지정된 열거형에서 name과 일치하는 열거형 상수를 반환한다.
+		static T[] values()
+				: 열거형 상수의 값들을 같은 타입의 배열에 담는다.
+
+	열거형에 멤버 추가하기
+		BRONZE(0.01), SILVER(0.03), GOLD(0.05), VIP(0.1);	<--- 값이 두개면 변수를 2개 추가하면
+									   된다.
+		// 열거형의 변수는 반드시 final로 정의해야 한다.
+		private final double value;
+	
+		// 열거형의 생성자는 멤버변수를 초기화해야한다.
+		// 열거형의 생성자는 오직 private만 가능하다.
+		// 열거형의 생성자는 열거형 내부적으로 사용된다.
+		private DeposiRate(double value) {
+			this.value = value;
+		}
+	
+		public double getValue() {
+			return value;
+		}
+
+
+어노테이션(Annotation)
+	: 주석처럼 프로그래밍 언어에 영향을 미치지 않으면서도 다른 프로그램에게 유용한 정보를 
+ 	 제공할 수 있다는 장점이 있다.
+
+	* 마크업 어노테이션
+		: 어노테이션 요소가 정의되어 있지 않는 어노테이션
+	@Retention(RUNTIME)	<--- 어노테이션이 유지되는 범위를 지정하는데 사용된다.
+	@Target(METHOD)		<--- 어노테이션이 적용가능한 대상을 지정하는데 사용한다.
+	public @interface Test {
+		// 어노테이션 요소 정의하는 곳
+	}
+	
+	* 위둘 어노테이션은 새로운 어노테이션을 생성하는데 반드시 있어야하는 어노테이션이다.
+	* @Retention  -  SOURCE  : 소스파일에만 존재. 클래스 파일에는 존재하지 않음
+			 CLASS   : 클래스 파일에 존재. 실행시 사용불가. 기본값
+			 RUNTIME : 클래스 파일에 존재. 실행시에 사용가능.
+
+	* 어노테이션 요서 정의하기
+		@Retention(RUNTIME)
+		@Target(FIELD)
+		public @interface NotNull {
+			// 어노테이션 요소 정의하기
+			String message();
+		}
+
+		@NotNull(message = "이름은 필수입력값입니다.")
+		String name;
+	
+		@NotNull(message = "이메일은 필수입력값입니다.")
+		String email;
+	
+		String tel;
+
+	* 어노테이션 요소의 규칙
+		- 요소의 타입은 기본형, String, enum, annotation, Class만 허용된다.
+		- () 안에 매개변수를 선언할 수 없다.
+		- 예외를 선언할 수 없다.
+		- 요소를 타입 매개변수로 정의할 수 없다.
