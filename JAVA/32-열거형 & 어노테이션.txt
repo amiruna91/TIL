@@ -2,37 +2,77 @@
 	- 열거형은 여러 개의 상수를 빠르게 정의할 수 있다.
 	- 열거형은 컴파일시 값이 체크된다.
 	- 열거형은 java.lang.Enum 클래스로부터 다양한 메서드를 상속받았다.
-	* 선언 : public enum 열거형 이름 {
+	* 선언 : enum 열거형 이름 {
 			상수명1, 상수명2, 상수명3,.....
 		 }
+		 
+	  예시 : enum CustomerGrade {
+		 	BRONZE, SILVER, GOLD, VIP, VVIP
+			* 각각의 항목은 CoustomerGrade의 상수가 된다.
+			* 각각의 항목은 정의된 순서대로 0부터 시작하는 순서값을 가진다.
+ 		 }
+	- 열거형의 사용 :
+	public class Customer {
+		private String name;
+		private String email;
+		private CustomerGrade grade;	// 열거형의 상수값을 담는 필드
 
-	주요메서드:
-		String 	name()	
+		public void setGrade(CustomerGrade grade) {
+			this.grade = grade;
+		}
+		public CustomerGrade getGrade() {
+			return grade;
+		}
+	}
+	* 생성자에서 사용하기
+	Customer c1 = new Customer("김유신", "kim@gmail.com", CustomerGrade.VIP);
+	Customer c2 = new Customer("강감찬", "kang@gmail.com", CustomerGrade.BRONZE);
+	* 대입연산에서 사용하기
+	CustomerGrade grade = CustomerGrade.VIP;
+	* 비교연산에서 사용하기
+	if (c1.getGrade() == c2.getGrade()) {...} // 열거형의 상수값은 == 연산자로 비교할 수 있다.
+
+		주요메서드:
+			String 	name()	
 				: 열거형 상수의 이름을 문자열로 반환한다.
-		int 	ordinal()
+			int 	ordinal()
 				: 열거형 상수가 정의된 순서를 반환한다(0부터 시작)
-		static T Enum.valueOf(Class<T> enumType, String name)	
+			static T Enum.valueOf(Class<T> enumType, String name)	
 				== static T valueOf(String name) 
 				: 지정된 열거형에서 name과 일치하는 열거형 상수를 반환한다.
-		static T[] values()
+			static T[] values()
 				: 열거형 상수의 값들을 같은 타입의 배열에 담는다.
 
-	열거형에 멤버 추가하기
-		BRONZE(0.01), SILVER(0.03), GOLD(0.05), VIP(0.1);	<--- 값이 두개면 변수를 2개 추가하면
-									   된다.
-		// 열거형의 변수는 반드시 final로 정의해야 한다.
-		private final double value;
+	- 멤버를 가진 열거형
+		enum Grade {
+			// 해당 등급 고객의 최소 적립포인트
+			BRONZE(0.01), SILVER(0.03), GOLD(0.05), VIP(0.1);	
+			
+			// 상수의 값이어서 값이 초기화된 이후에는 변경할 수 없도록 final로 정의
+			private final double point;	
+			private Grade(double point) {	// 생성자의 접근제한자는 private만 사용가능하다.
+				this.point = point;
+			}
 	
-		// 열거형의 생성자는 멤버변수를 초기화해야한다.
-		// 열거형의 생성자는 오직 private만 가능하다.
-		// 열거형의 생성자는 열거형 내부적으로 사용된다.
-		private DeposiRate(double value) {
-			this.value = value;
+			public double getValue() {	// 상수의 값을 반환하는 getter 메서드다. setter는 
+				return point;		  정의할 필요 없다.
+			}
+	
 		}
 	
-		public double getValue() {
-			return value;
+	멤버를 가진 열거형의 사용
+		public class Customer {
+			private String name;
+			private String email;
+			private Grade grade;
+		
+			// 생성자, getter/setter는 지면상 생략
 		}
+
+		Customer c1 = new Customer("홍길동", "hong@gmail.com", Grade.BRONZE);
+		Customer c2 = new Customer("김유신", "kim@gmail.com", Grade.GOLD);
+		System.out.println("홍길동 고객의 적립률: " + c1.getGrade().getPoint());
+			
 
 
 어노테이션(Annotation)
