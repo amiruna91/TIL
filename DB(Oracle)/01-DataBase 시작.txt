@@ -1,0 +1,44 @@
+﻿관계형 데이터베이스
+	:관계 또는 2차원 테이블을 사용하여 정보를 저장.(2차원 표의 형태로 저장되는 구조)
+엔티티 
+	: 한 개 이상의 속성으로 구성되어 있다.
+	  엔티티 간에 관계를 구성하고 있다. 프로그램의 주요 대상이 되는것이 엔티티다.
+테이블 
+	: 여러개의 속성으로 구성되어 있는 엔티티를 담을려고 만든 것이 테이블이다. 
+	 실제로 데이터가 저장되어 있는 공간이다.
+행(row) 
+	: 하나 이상에 컬럼으로 구성되어 있으며, 하나의 정보를 나타낸다.
+열(column)
+	: 같은 속성의 데이터 값만 들어가 있다.
+C,R,U,D 
+	: INSERT - 생성 - Create
+	  SELECT - 조회 - Retrieve
+	  UPDATE - 변경 - Update
+	  DELETE - 삭제 - Delete
+
+	I,U,D ---> 실행 결과는 행의 갯수가 오고
+	S     ---> 실행 결과는 데이터가 온다.
+
+관계형 데이터베이스의 특징
+	- SQL문을 실행해서 엑세스하고 수정할 수 있다.
+	- 물리적인 포인터가 필요없이 이름만 알면 테이블에 접근할 수 있다.
+	- 연산자 집합을 사용할 수 있다.
+
+SQL 
+	- Structured Query Language
+	- 구조화된 질의 언어
+	- DBMS의 데이터에 엑세스하는 명령어다.
+	- 효율적으로 명령어를 통해 db를 관리하고 조작할 수 있다.
+	
+SQL문의 종류
+	데이터 조회	  
+			- SELECT
+	DML(Data Manipulation Lenguage: 데이터 조작어) 
+			- INSERT, UPDATE, DELETE, MERGE
+	DDL(Data Definition Lenguage: 데이터 정의어) 
+			- CREATE, ALTER, DROP, RENAME, TRUNCATE
+	트랜잭션 제어 	  
+			- COMMIT, ROLLBACK, SAVEPOINT
+	DCL(Data Control Language: 데이터 제어어) 
+			- GRANT, REVOKE
+
