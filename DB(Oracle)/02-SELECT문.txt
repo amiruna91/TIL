@@ -40,14 +40,51 @@
 		WHERE 조건식;
 		* 조건식의 연산결과가 true로 판정되는 행만 선택된다.
 		* 비교 연산자 
-			=	같다.
-			>	크다
-			>=	크거나 같다
-			<	작다
-			<=	작거나 같다
-			<>	같지않다
-			!=	같지않다
+			=				같다.
+			>				크다
+			>=				크거나 같다
+			<				작다
+			<=				작거나 같다
+			<>				같지않다
+			!=				같지않다
+			between 하한값 and 상한값	값의 범위에 포함(하한값, 상한값도 포함)
+			in (값1, 값2, 값3, ...)		제시된 값들 중에서 하나라도 일치한 것
+			like 문자패턴			문자패턴과 일치하는 것
+				 * 와일드 카드
+					% 	0개 이상의 문자
+				 	_ 	문자 하나
+			is null				null값인 것
+			is not null			null값이 아닌 것	
+
 		* 조건식
 			WHERE  컬럼명  비교연산자  값;
 			WHERE  연산식  비교연산자  값;
 			WHERE  연산식  비교연산자  연산식;
+			작성예)
+				where salary > 6000;
+				where department_id = 70;
+				where salary*12 > 50000;
+				where manager_id is not null;
+				where department_id in (10, 20);
+				where job_id in ('AD_PRES', 'AD_VP');
+		* 논리 연산자
+			and	조건식의 모든 조건이 true일 때 true를 반환한다.
+			or	조건식의 조건 중 하나라도 true일 때 true를 반환한다.
+			not	조건식의 연산결과를 반전시킨다.
+		* 논리 연산자가 포함된 조건식
+			where 컬럼명 비교연산자 값 and 컬럼명 비교연산자 조건식
+			작성예)
+				where department_id = 60 and salary >= 5000;
+				where department_id = 50 and job_id like '%MAN';
+				where salary >= 10000 and salary <= 20000;
+				where department_id in (50, 60, 70) and salary > 15000;
+
+	- 정렬하기
+		* ORDER BY 절을 사용하면 행을 정렬할 수 있다.
+		* ORDER BY 절은 SELECT문의 가장 끝에 위치한다.
+		* ORDER BY 절에서는 정렬조건으로 컬러명, 연산식, 별칭, 컬럼의 순번을 지정할 수 있다.
+		* ORDER BY절
+			SELECT 컬럼명, 컬럼명, 컬럼명
+			FROM 테이블명
+			[WHERE 조건식]
+			[ORDER BY 정렬조건 ASC|DESC]
