@@ -1,39 +1,102 @@
-조인
-	- 한 개 이상의 테이블을 사용해서 데이터를 획득해야할 때 사용된다.
-	  * 데이터베이스 정규화 작업을 통해서 정보들이 여러 개의 테이블로 나뉘어서
-	    저장/관리되기 때문에 조인 작업을 SQL의 select 작업에서 필수적인 기술이다.
-	- 조인을 사용하면 한번에 여러 테이블에서 데이터을 조회할 수 있다.
-	- 작성방법
-		select table1.column, table2.column,  -- table1과 table2에 있는 데이터를 조회할 수 있다.
-		from table1, table2                   -- 획득할 데이터가 포함된 테이블을 조인시킨다.
-		where table1.column1 = table2.column2 -- 조인된 행들중에서 유효한 행만 필터링하기 위한 조건식
+ 테이블 조인하기
+	* 조회할 데이터가 2개 이상의 테이블에 흩어져서 존재하는 경우 테이블의 조인이 필요하다.	
 
-		* from 절에 조인할 테이블을 정의하면, table1의 모든 행과 table2의 모든 행이 연결된다.
-                  (table1의 행의 갯수 x table2의 행의 갯수) 만큼의 행을 가진 테이블이 메모리 생성된다.
-		* n개의 테이블을 조인했다면 n-1개의 조인 조건식이 필요하다
+	- 테이블 조인 방법
+		select ~~~
+		from 테이블1, 테이블2, ... 
+		* from절에 조인할 테이블을 나열하면 된다.
+		* 테이블1의 모든 행과 테이블2의 ㅗ든 행이 결합된다.
+		* 테이블1의 행갯수 X 테이블2의 행갯수 만큼의 행이 조회된다.
+	- 조인 조건을 활용해서 서로 관련있는 행들끼리 결합된 행만 조회하기
+		select ~~
+		from 테이블1 A, 테이블2 B
+		where A.컬럼명 = B.컬럼명	// 조인 조건
+		* n개의 테이블을 조인하면 n-1개 이상의 조인 조건이 필요하다.
 		* 조회할 컬럼명이 동일할 때는 반드시 테이블명을 접두사로 붙여야 한다.
 		* 테이블에 별칭을 붙일 수 있다. 
-		select A.column, B.column, ...
-		from table1 A, table2 B
-		where A.column1 = B.column2
 
-	- 기본키 와 외래키
-		- 기본키는 테이블에서 고유한키를 말한다. 중복된 값이 없다. 
-		  기본키에는 고유한 순번 외에 다른 내용이 담겨 있으면 안된다.
-		- 외래키는 다른테이블의 기분키를 가져와서 적은 값이 외래키다.
-
-	- 조인의 종류
+	- 테이블 조인의 종류
 		- 등가조인
-			* 조인 조건에 참여하는 컬럼의 값이 서로 동일한 값을 가지는 경우
-			  select A.column, B.column, ...
-			  from table1 A, table2 B
-			  where A.column1 = B.column2; <---- 등가조인 조건 (서로 값이 동일한 경우 조인)
+			두 테이블의 컬럼값이 동일한 값을 가지고 있을 때 사용한다.
+			조인조건에 동등연산자(=)를 사용한다.
+			예) 	외래키				기본키
+				-------------------------------------------------------
+				employees의 department_id와   departments의 department_id : 부서번호를 가짐
+				employees의 job_id와 jobs의   job_id			  : 직종번호를 가짐
+				departments의 manager_id와    employees의 employee_id	  : 직원보호를 가짐
+				departments의 location_id와   locations의 location_id	  : 위치번호를 가짐
+				--------------------------------------------------------
+			예)	
+				select A,first_name, A.salary, B.department_name
+				from employees A, departments B
+				where A.department_id = B.department_id;
+				* 직원의 소속부서아이디와 부서의 부서아이디가 같은 값을 가진 행끼리 조인시킨다.
+				
+			* 주로 기본키와 외래키를 조인의 보조수단으로 포함한다.
+			* 기본키는 행을 대표하는 값을 포함하고 있는 컬럼이다.
+			* 외래키는 다른 테이블의 특정 컬럼값을 참조하는 값만을 가지는 컬럼이다.
+			- 기본키 와 외래키
+				* 기본키는 테이블에서 고유한키를 말한다. 중복된 값이 없다. 
+		  		  기본키에는 고유한 순번 외에 다른 내용이 담겨 있으면 안된다.
+				* 외래키는 다른테이블의 기분키를 가져와서 적은 값이 외래키다.
 
-		- 비등가조인
-			* 조인 조건에 = 연산자가 아닌 다른 연산자가 포함되는 조인이다.
-			* 등급을 계산할 때 사용된다.
-			  select A.column, B.column, ...
-			  from table1 A, table2 B
-			  where A.column >= B.column1  <--- 비등가 조인 조건
-			  and A.column <= B.column2  <--- (=연산이 아닌 다른 연산자가 사용)
-			* A.column between B.column1 and B.column2 와 같이 사용할 수 도 있다.
+		- 비 등가조인
+			동등연산자(=)가 아닌 다른 연산자를 포함하는 조인조건을 사용한다.
+			예)
+				employees의 salary와 job_grades의 lowest_sal, highest_sal
+			* 비등가 조인은 주로 값이 특정범위내에 속하는 행끼리 조인시킨다.
+			* 급여등급, 고객등급 등과 같이 특정 범위에 속할 때 해당 등급을 가진 행과 조인시킨다.
+			예)
+				select A.first_name, A.salary, B.gra
+				from employees A, job_grades B
+				where A.salary >= lowest_sal
+				and A.salary <= highest_sal
+				* 급여가 최소급여와 최대급여 사이인 행들끼리만 조인시킨다.
+				* 동등연산자(=) 대신 >, >=, <, <= 와 같은 연산자가 사용되는 조인이다.
+
+		- 셀프조인(자체조인)
+			동일한 테이블을 서로 조인 시키는 것이다.
+			예)
+				employees의 manager_id와 employees의 employee_id
+				* 각 사원의 관리자 이름을 찾기 위해서는 employees 테이블끼리 조인해야 한다.
+				* 자체 조인을 할 때는 테이블을 각각 직원용, 관리자용으로 구분해서 조인을 시킨다.
+				* 직원의 정보는 직원용 employees에서 관리자정보는 관리자용 employees에서 조회한다.
+			예)
+				select emp.first_name 직원명, emp.salary 직원급여
+				     , mgr.first_name 관리자명, mgr.salary 관리자급여
+				from employees emp, employees mgr
+				where emp.manager_id = mgr.employee_id;
+				* 같은 테이블을 자체조인할 때는 각 테이블을 적절한 별칭을 붙이는 것이 좋다.
+				* 값을 조회할 때 혼동되지 않도록 주의가 필요하다.
+			* 자체 조인이 필요한 정보를 주로 조직정보, 메뉴정보, 카테고리정보 등이 자체조인이 필요한 테이블들이다.
+			* 이런 테이블들은 거의 대부분 하나의 테이블 안에 상위정보와 하위정보가 같이 있다.
+		- 포괄조인
+			조인조건을 만족시키지 못하는 행도 조회결과에 포함시키는 조인이다.
+			* 포괄조인을 사용하면 조인조건을 만족하지 않는 행도 조회된다.
+			* 포괄조인 연산자는 (+) 이다.
+			* 포괄조인 연산자는 하나 이상의 null행을 생성한다.
+			* 포괄조인 연산자는 null 행이 필요한 조인옆에 붙인다.
+			예)
+				departments의 manager_id와 employees의 employee_id
+				* 부서의 담당자정보를 조회하기 위해서 employees와 조인한다.
+				* departments의 manager_id값이 null인 행은 employees의 어느 행과도 조인된지 않는다.
+				* employees측이 null행이 필요한 테이블이기 때문에 조인조건에서 employees측에 (+)를 붙인다.
+			예)
+				select A.department_id, A.department_name, B.first_name
+				from departments A, employees B
+				where A.manager_id = B.emloyee_id(+);
+				* A의 manager_id는 null 값을 가진 행이 있다.
+				* B의 employee_id는 null 값을 가진 행이 없다.
+				* B측이 null행이 필요한 곳이다.
+		
+	- 테이블 조인시 주의사항
+		- 테이블을 조인할 때는 컬럼의 이름이 같은 것끼리 조인하는 것이 아니라,
+		  같은 성질의 값을 가졌거나, 서로 관련있는 값을 가진 컬럼을 조인조건에 사용해야 한다.
+		- 테이블을 조인할 때는 조회결과에 포함되는 값들을 어느 테이블에서 획득할 수 있는지 
+  		  확인하는 것이 첫번째 할 일이다.
+		- 테이블을 조인할 때는 조인작업을 할 때마다 해당 테이블을 from절에 포함시켜야 한다.
+		  * 직원의 정보, 직원의 소속부서정보, 직원의 소속부서의 관리자정보를 조회할때,
+		    직원과 소속부서저옵의 획들을 위해서 employees와 departments가 필요하고,
+		    소속부서의 관리자 정보를 획득하기 위해서 employees가 또 필요하다.
+		    select
+		    from employees 직원, departments 소속부서, employees 소속부서관리자
