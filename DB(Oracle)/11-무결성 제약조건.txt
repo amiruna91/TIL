@@ -1,0 +1,136 @@
+﻿무결성 제약조건
+	- 테이블에 유효하지 않은 데이터가 입력되는 것을 방지하기 위해서 정의하는 것이다.
+	* 테이블에 새로운 행이 추가될 때, 행의 값이 변경될 때, 행이 삭제될 때 마다 정의된 제약조건을 위배하지 않는지 검사한다.
+	
+	- 무결성 제약조건의 종류
+		------------------------------------------------------------------------------------------
+		제약조건		설명
+		------------------------------------------------------------------------------------------
+		NOT NULL		지정된 컬럼이 NULL값을 포함하지 못하도록 한다.
+					예) 사용자명, 비밀번호, 배송지주소 등
+		------------------------------------------------------------------------------------------
+		UNIQUE			지정된 컬럼은 테이블의 모든 행에서 고유한 값을 가져야 한다.
+					예) 주민번호, 이메일, 사용자 아이디 
+		------------------------------------------------------------------------------------------
+		PRIMARY KEY		지정된 컬럼의 테이블에서 각 행을 고유하게 식별할 수 있어야 한다.
+					지정된 컬럼은 고유한 값을 가져야 되고, NULL값을 포함할 수 없다.
+					테이블에서 행을 대표하는 컬럼에 PRIMARY KEY 제약조건을 정의한다.
+					보통은 일련번호 발생기로부터 획득한 값을 사용한다.
+					예) 학번, 사원번호, 부서번호 등
+		------------------------------------------------------------------------------------------
+		FOREIGN KEY		지정된 컬럼은 참조된 테이블의 컬럼과 외래키 관계를 설정한다,
+					지정된 컬럼에 입력되는 값은 참조된 테이블의 컬럼에 존재하는
+					값만 유효한 값으로 인정된다.
+					예) 
+					  직원테이블의 부서아이디는 부서테이블의 부서아이디를 참조한다.
+					  직원테이블의 직종아이디는 직종테이블의 직종아이디를 참조한다.
+					  부서테이블의 관리자아이디는 직원테이블의 직원아이디를 참조한다.
+					  직원테이블의 매니저아이디는 직원테이블의 직원아이디를 참조한다.
+		------------------------------------------------------------------------------------------
+		CHECK			지정된 컬럼은 제시된 조건식이 true로 판정되는 값만 입력된다.
+					예)
+					   성적은 0.0 ~ 4.5사이의 값만 입력되어야 한다.
+					   합격여부는 '합격', '불합격' 둘 중 하나만 입력되어야 한다.
+					   성별은 '남', '여' 둘 중 하나만 입력되어야 한다.
+					   가격은 0보다 큰 값만 입력되어야 한다.
+					   생일은 오늘보다 이전 날짜의 값만 입력되어야 한다.
+		------------------------------------------------------------------------------------------
+
+	- 제약조건 정의하기
+		- 컬럼제약조건 레벨
+			create table 테이블명 (
+				컬럼명	데이터타입 [default 값] [컬럼제약조건],
+				컬럼명 	데이터타입 [default 값] [컬럼제약조건],
+				...
+			);
+			* 하나의 컬럼에 대해서 제약조건을 지정한다.
+			* NOT NULL 제약조건은 컬럼제약조건으로만 지정할 수 있다.
+			* 컬럼제약조건
+				컬럼명 데이터타입 [CONSTRAINT 제약조건별칭] 제약조건
+				* 제약조건별칭은 생략할 수 있다.
+		- 테이블제약조건 레벨
+			create table 테이블명 (
+				컬럼명 데이터타입 [default 값],
+				컬럼명 데이터타입 [default 값],	
+				...,
+				[테이블 제약조건]
+			);
+			* 하나 이상의 컬럼에 대해서 제약조건을 지정할 수 있다.
+			* NOT NULL 제약조건을 제외한 모든 제약조건을 지정할 수 있다.
+			* 테이블제약조건
+				[CONSTRAINT 제약조건별칭] 제약조건 (컬럼명, 컬럼명, ...)
+		- 제약조건 정의하기
+			* NOT NULL 제약조건
+			  create table users (
+			  	user_name varchar2(100)   		       NOT NULL, -- 컬럼제약조건
+				user_pwd  varchar2(100) CONSTRAINT user_pwd_nn NOT NULL, 
+				...
+ 			  );
+			  * 컬럼제약조건 레벨로만 정의할 수 있다.
+
+			* UNIQUE 제약조건
+			  create table users (
+				user_id 	   varchar2(100) 		   UNIQUE,
+				user_email  varchar2(256) CONSTRAINT USER_EMAIL_UK UNIQUE,	
+				...
+			  );
+			   create table users (
+				user_id 	varchar2(100),
+				user_email  	varchar2(256),	
+				...,
+				UNIQUE (user_id),
+				CONSTRAINT user_email_uk UNIQUE (user_email) 
+			  );
+			  * UNIQUE 제약조건은 테이블 전체 행에서 해당 컬럼의 값에 중복된 값을 허용하지 않는다.
+			  * UNIQUE 제약조건만 지정된 컬럼의 경우 NULL값이 입력되는 것은 상관없다.
+
+			* PRIMARY KEY 제약조건
+			  create table users (
+				user_no number(10, 0) 			   PRIMARY KEY,
+				user_no number(10, 0) CONTRAINT user_no_pk PRIMARY KEY
+				
+			  );
+			  create table users (
+				user_no number(10, 0),
+				user_no number(10, 0),
+				CONSTRAINT user_no_pk PRIMARY KEY (user_no)
+			  );
+			  * PRIMARY KEY 제약조건은 테이블당 하나만 가능하다.
+			  * 두 개 이상의 컬럼을 조합해서 PRIMARY KEY 제약조건을 지정할 수도 있다.
+
+			* FOREIGN KEY 제약조건
+			  create table orders (
+				user_no number(10) 			      REFERENCES users (user_no),
+				book_no number(10) CONSTRAINT order_bookno_fk REFERENCES books (book_no)
+			  );
+			  create table orders (
+				user_no2 number(10),
+				book_no2 number(10),
+				FOREIGN KEY (user_no2) REFERENCES users (user_no),
+				CONSTRAINT orders_bookno_fk FOREGIN KEY (user_no2) REFERENCES users (user_no)
+			  );
+			   * 외래키 user_no2의 값은 users테이블의 user_no 컬럼을 참조한다.
+			   * 외래키 book_no2의 값은 books테이블의 book_no 컬럼을 참조한다.
+			   * 외래키가 참조하는 컬럼은 반드시 PRIMARY KEY, UNIQUE 제약조건이 지정된 컬럼이어야 한다.
+			
+			 * CHECK 제약조건
+			   create table products (
+				price number(7, 0) 			       CHECK (price >= 0),
+				sold_out char(1) 			       CHECK (sold_out in ('Y', 'N')),
+				stock number(5, 0) CONSTRAINT product_stock_cc CHECK (stock >= 0)
+			   );
+			   * 가격은 0원 이상만 입력할 수 있다.
+			   * 절판여부는 'Y', 'N' 중에 하나만 입력할 수 있다.
+			   * 재고는 0개 이상만 입력할 수 있다.
+			   create table course_registrations (
+				period     char(6)	-- 202001, 201902
+			   	student_no number(6, 0),
+				course_no number(6, 0),
+				score char(1),
+				CONSTRAINT course_reg_uk   UNIQUE (period, student_no, course_no),
+				CONSTRAINT course_score_cc CHECK (score in ('A','B','C','D','F'))
+			   );
+			   * 학기,학번,과정번호가 동일한 행은 존재할 수 없다.
+			   * 학점은 'A','B','C','D','F' 값들만 허용된다.
+	* ERMaster?? 요건 뭘까?? 다운받은 jar를 이클립스 plugins 폴더에 넣어주자.
+	  테이블들의 정보와 제약조건, 관계가 나오는 다이어그램을 만들어서 보여준다.
