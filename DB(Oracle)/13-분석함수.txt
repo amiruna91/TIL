@@ -1,0 +1,32 @@
+﻿Top-N 분석
+	- Top-N 분석 SQL문은 테이블에서 조건에 맞는
+	  최상위 레코드 n개 또는 최하위 레코드 n개를 조회하는 시나리오에 유용하다.
+	  예) 회사의 최상위 소득자 3명, 가장 최근에 입사한 신입사원 4명,
+	      최근 6개월동안 가장 많이 팔린 제품 3가지, 가장 평점이 높은 상품 10개
+	- Top-N 분석 SQL문
+	  	select ROWNUM, 컬럼명, 컬럼명, ...
+  		from (select 컬럼명, 컬럼명, ...
+		      from 테이블명
+		      [where 조건식]
+		      order by Top-N분석컬럼)
+		where ROWNUM <= N;
+		* ROWNUM : 조회된 순서대로 순번을 부여하는 오라클의 키워드다.
+
+분석함수 사용하기
+	- ROW_NUMBER() OVER([partition by 컬럼명] order by 컬럼명 [asc|desc])
+		순번을 부여한다.
+		* 특정 컬럼의 값을 기준으로 범위별로 나눠서 조회할 때 주로 사용된다.
+	- RANK()       OVER([partition by 컬럼명] order by 컬럼명 [asc|desc])
+		랭킹을 부여한다.
+		* 동일 랭킹 순서의 다음번 순서는 갯수만큼 먼너 뛴다.
+	- DENSE_RANK() OVER([partition by 컬럼명] order by 컬럼명 [asc|desc])
+		랭킹을 부여한다.
+		* 동일 랭킹 순서가 있어도 다음번 순서에 맞게 랭킹이 매겨진다.
+	* partition by 는 해당 컬럼의 단위별로 순위가 매겨진다.
+
+	- 분석함수 SQL 문 
+	select 컬럼명, 컬럼명, ...
+	from (select ROW_NUMBER() OVER(order by 컬럼명) 별칭, 컬럼명, 컬럼명, ...
+	      from 테이블명
+	     [where 조건식])
+	[where 별칭을 이용하는 조건식]
