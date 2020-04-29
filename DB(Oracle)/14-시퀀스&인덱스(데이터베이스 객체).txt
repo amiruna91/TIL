@@ -1,0 +1,53 @@
+﻿- 시퀀스 (SEQUENCE)
+	- 고유번호(일련변호)를 생성하는 데이터베이스 객체다.
+	  * 고유번호를 자동으로 생성한다.
+	  * 테이블의 기본 키 값으로 사용된다.
+	  * 여려 사용자가 공유할 수 있다.
+	
+	- 시퀀스 생성
+		CREATE SEQUENCE 시퀀스명
+			[START WITH n]			-- 기본값 1		-- n번호 부터 시작
+			[INCREMENT BY N]		-- 기본값 1		-- 정수 n만큼 번호 증가
+			[{MAXVALUE n | NOMAXVALUE}]	-- 기본값 NOMAXVALUE	-- 시퀀스의 최대값 n
+			[{MINVALUE n | NOMINVALUE}]	-- 기본값 NOMINVALUE	-- 시퀀스의 최소값 n
+			[{CYCLE | NOCYCLE}]		-- 기본값 NOCYCLE	-- 최대값/ 최소값에 도달했을시 리셋여부
+			[{CACHE | NOCACHE}]		-- 기본값 NOCACHE 20	-- 20개값을 메모리에 미리 할당할지 여부
+		* 아래의 옵션을 설정하지 않으면 1씩 증가, 1부터 시작, 캐시를 사용
+	- 주요 함수
+		nextval
+			새로운 일련번호를 반환한다.
+		currval
+			현재 시퀀스의 일련번호값을 반환한다.
+			currval를 실행할려면 해당 시퀀스에 대해서 nextval가 실행되어야한다.
+	- 시퀀스 삭제
+		DROP SEQUENCE 시퀀스명;
+	- 시퀀스 수정
+		ALTER SEQUENCE 시퀀스명
+			[INCREMENT BY N]
+			[{MAXVALUE n | NOMAXVALUE}]
+			[{MINVALUE n | NOMINVALUE}]
+			[{CYCLE | NOCYCLE}]
+			[{CACHE | NOCACHE}]
+		* START WITH n 값은 수정할 수 없다.
+		* 시퀀스를 다른 번호로 다시 시작할려면 시퀀스를 삭제한 후 다시 생성해야 한다.
+
+- 인덱스(index)
+	- SQL문의 검색 속도를 향상시키기 위해서 사용한다.
+	- ROWID를 사용하여 데이터의 위치를 빠르게 찾을 수 있기 때문에 디스크 I/O를 줄일 수 있다.
+	- 인덱스의 생성
+		CREATE INDEX 인덱스명
+		ON 테이블명 (컬럼명, ...);
+
+		CREATE INDEX 인덱스명
+		ON 테이블명 (연산식);
+
+	- 인덱스의 생성 방법에 따른 구분
+		* 자동(묵시적) : 테이블 생성시 PRIMARY KEY 또는 UNIQUE 제약조건을 정의하면 
+			 	 해당 컬럼에 대해서 인덱스가 자동으로 생성된다. 
+		* 수동(명시적) : CREATE INDEX 명령문을 사용해서 인덱스를 생성하는 것
+	- 인덱스 생성이 필요한 경우
+		* WHERE 절 또는 조인 조건에서 해당 컬림이 자주 사용되는 경우
+		* 컬럼에 다양한 값이 포함된 경우 (사람의 이름, 이메일, 전화번호 ...)
+		* 컬럼에 NULL값이 많이 포함된 경우
+		* 큰 테이블에서 실행되는 대부분의 SQL문에 대해서 2%내외의 행이 검색되는 경우
+		
