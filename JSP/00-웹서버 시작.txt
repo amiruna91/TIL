@@ -1,0 +1,54 @@
+﻿web application developer --- 직업
+web application -- 동적인 웹 컨텐츠를 제공하는 프로그램
+
+웹컨텐츠
+	- 정적인 웹 컨텐츠
+		* 미리 만들어 놓은 웹 문서, 그림, 영상
+	- 동적인 웹 컨텐츠
+		* 방문시간, 방문자에 따라서 다른 정보가 제공된다.
+		* 사용자가 요청하는 순간 프로그램이 실행되어서 웹 컨텐츠가 생성되고, 사용자에게 제공된다.
+
+Protocol(프로토콜)
+	- Client 와 Server간에 주고 받는 메세지의 형식을 규정한것
+	- 종류 : 
+	   	  ip (컴퓨터간에 식별을 하기 위해서)
+	 	, tcp (메세지의 오류 유무를 정보를 가지고 있다.)
+	 	, http (브라우저와 webSever간에 정보를 주고 받을때)
+	 	, smtp (메일을 보낼때 메일에 포함되는 정보를 가지고 있다.)
+		, telnet, ssh (smtp와 비슷하다)
+		, ftp (파일 전송을 주고 받을때 사용된다.)
+
+웹서버
+	- Java 	
+		* Tomcat - 웹서버 기능만
+			 - Servlet/ JSP (웹애플리케이션 구현기술) 로 기능을 만들었다.
+		* jBoss, WebLogic, jeus --- 웹서버 + ejb + ...
+	- php
+		* Apache - php(웹어플리케이션 구현기술)로 구현된다.
+	- javascript
+		* node.js - node.js로 구현되어 있다.
+        - ISS - ASP/ 닷넷 
+
+클라이언트(웹브라우져)가 웹서버에 요청을 보내기
+	* 브라우저는 항상 URL 형태의 요청을 서버로 보낸다.
+	  http://localhost:80/home.jsp
+	* URL의 구성
+		http - 프로토콜명
+		localhost - 서버 프로그램이 구동되고 있는 컴퓨터이름
+		80 - 서버프로그램이 사용하고 있는 포트번호
+		/home.jsp - 클라이언트가 실행을 요청한 웹 애플리케이션 이름
+	* 브라우저의 요청내용
+		* 내컴퓨터(localhost)의 80번 포트를 사용하는 서버 프로그램에게 요청을 보낸다.
+		* /home.jsp의 실행을 요청한다.
+
+서버(Tomcat)이 클라이언트의 요청을 처리하기
+	* 요청 URL을 분석한다.
+		프로토콜 - http
+		실행할 jsp파일의 경로 - / => omcat 9.0\webapps\ROOT
+		실행할 jsp파일의 이름 - home.jsp
+	* home.jsp를 실행한다.
+		1. home.jsp를 home_jsp.java로 변환한다.
+		2. home_jsp.java를 home_jsp.class로 컴파일한다.
+		3. home_jsp.class를 객체를 생성한다.
+		4. 생성된 객체의 _jspService()메서드를 실행한다.
+		5. _jspService() 메서드는 동적인 웹 컨텐츠를 생성해서 브라우저로 출력한다.
