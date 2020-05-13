@@ -1,0 +1,51 @@
+﻿표를 담는 태그(Table 태그)
+	- <table></table>태그는 표를 정의한다.
+	- <table> 태그는 <thead>, <tbody>, <tfoot>를 자식태그로 가진다.
+	- <table> 태그는 <tr>를 자식태그로 가진다.
+	- <thead> 태그는 <tr>를 자식태그로 가진다.
+	- <tbody> 태그는 <tr>를 자식태그로 가진다.
+	- <tfoot> 태그는 <tr>를 자식태그로 가진다.
+	- <tr> 태그는 <th> 태그를 자식태그로 가진다.
+	- <tr> 태그는 <td> 태그를 자식태그로 가진다.
+	- <th> 태그는 컨텐츠를 담는다.
+	- <td> 태그는 컨텐츠를 담는다.
+	* <table> : Table 	 	(표)
+	* <thead> : Table Header Group 	(표의 머리부분)
+	* <tbody> : Table Body 	 	(표의 내용)
+	* <tfoor> : Table Footer 	(표의 바닥부분)
+	* <tr>	  : Table Row 	 	(표의 행)
+	* <th>	  : Table Header 	(표의 제목들)
+	* <td>	  : Table Data   	(표의 데이터)
+
+	- 테이블 병합하기
+		* 가로방향 병합하기 
+			- colspan 속성 사용하기
+		<h3>가로방향으로 병합된 셀이 있는 표</h3>
+    		<table>
+       			<tr>
+            			<td colspan="6">값</td>
+        		</tr>
+        		<tr>
+            			<td colspan="3">값</td>
+            			<td colspan="3">값</td>
+        		</tr>
+
+		* 세로방향 병합하기
+			- rowspan 속성 상용하기
+			  * 세로로 병합됬기 때문에 다른 row들의 갯수는 하나씩 줄여 줘한다.
+		   <table>
+       			 <tr>
+            			<td rowspan="6"></td>
+           			<td></td>
+            			<td></td>
+            			<td></td>
+            			<td></td>
+            			<td></td>
+      			  </tr> <tr>
+           			<td></td>
+            			<td></td>
+            			<td></td>
+            			<td></td>
+            			<td></td>
+      			  </tr>
+				
