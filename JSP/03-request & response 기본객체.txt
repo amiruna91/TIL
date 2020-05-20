@@ -1,0 +1,44 @@
+﻿HTTP는 무상태 프로토콜이다.(stateless)
+	* 요청이 시작되면 client와 서버가 연결됨
+	* 응답이 완료될때 까지 연결유지
+	* 응답이 완료되면 연결해지
+	* 웹서버가 클라이언트의 상태를 유지하지 않는다.
+		- HTTP는 서버 푸쉬가 되지 않는다.
+		- HTTP는 요청하고 응답받는 1회성이 끝나면 연결을 끈어버린다.
+
+	- client가 요청을 하지 않아도 server 쪽에서 계속 응답을 해주는걸 서버푸쉬라고한다.
+	- 예) 게임서버, 긴급재난문자
+
+request & response 기본객체
+
+	request 기본객체
+		* 요청메세니 정보를 획득할 수 있는 기능을 제공한다.
+		* 주요 기능
+			- 클라이언트와 관련된 정보 읽기 기능
+			- 서버와 관련된 정보 읽기 기능
+			- 클라이언트가 전송한 요청 파라미터 읽기 기능
+			- 클라이언트가 전송한 요청 헤더 읽기 기능
+			- 클라이언트가 전송한 쿠키 읽기 기능
+			- 속성 처리 기능
+		* 주요 메서드
+			- 요청 방식
+			  * getMethod()			String		정보를 전송할 때 사용한 방식을 구한다.
+			- 컨텍스트 패스
+			  * getContextPath()		String 		JSP 페이지가 속한 컨텍스트 경로를 구한다. 
+			- 요청 URL
+			  * getRequestURI		String		웹브라우저가 요청한 URL에서 경로를 구한다.
+			- 요청 헤더 정보
+			  * getHeader("host")		String		헤더의 있는 host의 정보를 얻는다.
+			  * getHeader("user-agent")	String		.. OS 정보를 얻는다.
+			  * getHeader("accept");	String		.. 파일형식을 얻는다.
+			  * getHeader("accept-encoding"); String	.. 파일의 인코딩 정보를 얻는다.
+			  * getHeader("accept-language"); String	.. 파일의 언어정보를 얻는다.
+			- 클라이언트 IP
+			  * getRemoteAddr()	String		클라이언트의 IP주소를 구한다.
+			- 접속자 나라
+			  * getLocale		Locale		locale.getCountry()메서드를 사용하면 나라정보를 얻는다.
+			- 접속자 언어
+			  * getLocale		Locale		locale.getLanguage()메서드를 사용하면 언어정보를 얻는다.
+			
+	response 기본객체
+		* 응답컨텐츠를 브라우져로 보내는데 필요한 기능 제공한다.
