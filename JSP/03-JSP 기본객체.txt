@@ -1,0 +1,73 @@
+﻿===================================================================================================================
+	HTTP는 무상태 프로토콜이다.(stateless)
+		* 요청이 시작되면 client와 서버가 연결됨
+		* 응답이 완료될때 까지 연결유지
+		* 응답이 완료되면 연결해지
+		* 웹서버가 클라이언트의 상태를 유지하지 않는다.
+			- HTTP는 서버 푸쉬가 되지 않는다.
+			- HTTP는 요청하고 응답받는 1회성이 끝나면 연결을 끈어버린다.
+
+		- client가 요청을 하지 않아도 server 쪽에서 계속 응답을 해주는걸 서버푸쉬라고한다.
+		- 예) 게임서버, 긴급재난문자
+===================================================================================================================
+
+JSP 기본객체
+	- 요청객체(request)
+		* HttpServletRequest의 구현객체다.
+		* 클라이언트가 서버로 보낸 요청메세지 정보를 제공한다.
+		* jsp에서는 request 변수에 저장되어 있다.
+
+		* 주요 기능
+			- 클라이언트와 관련된 정보 읽기 기능
+			- 서버와 관련된 정보 읽기 기능
+			- 클라이언트가 전송한 요청 파라미터 읽기 기능
+			- 클라이언트가 전송한 요청 헤더 읽기 기능
+			- 클라이언트가 전송한 쿠키 읽기 기능
+			- 속성 처리 기능
+
+		* 주요 메서드
+			- 요청파라미터 관련
+			* void 	   setCharacterEncoding(String encoding)
+		********* String   getParameter(String name)
+		      *** String[] getParameterValues(String name)
+
+			- 요청메세지 관련
+		 	  String getMethod()		정보를 전송할 때 사용한 방식을 구한다.
+			* String getContextPath()	JSP 페이지가 속한 컨텍스트 경로를 구한다. 
+		 	* String getRequestURI		웹브라우저가 요청한 URL에서 경로를 구한다.
+
+			- 클라이언트 관련
+			  String getRemoteAddr()	클라이언트의 IP주소를 구한다.
+			  Locale getLocale()		locale.getCountry()메서드를 사용하면 나라정보를 얻는다.
+			  Locale getLocale()		locale.getLanguage()메서드를 사용하면 언어정보를 얻는다.
+
+			- 요청 헤더 관련
+			  String getHeader("host")		헤더의 있는 host의 정보를 얻는다.
+			  String getHeader("user-agent")	... OS 정보를 얻는다.
+			  String getHeader("accept")	 	... 파일형식을 얻는다.
+			  String getHeader("accept-encoding") 	... 파일의 인코딩 정보를 얻는다.
+			  String getHeader("accept-language") 	... 파일의 언어정보를 얻는다.	
+		
+	- 응답객체(response)
+		* HttpServletResponse의 구현객체다.
+		* 서버가 클라이언트로 보내는 응답메세지 정보를 담는다.
+		* jsp에서는 response 변수에 저장되어 있다.
+
+		* 주요 기능
+			- 헤더 정보 입력
+			- 리다이렉트 하기
+
+		- 리다이렉트를 이용해서 페이지 이동하기
+	 		* 재요청할 URL을 응답 으로 보내주는 것을 리다이렉트라고 한다.
+			* 웹서버가 웹브라우저에게 다른 페이지로 이동하라고 응답하는 기능이다. 이때 리다이렉트가 응답되고
+			  요청되는 과정은 사용자가 보지 못하고 최종적을 리다이렉트된 화면이 보여지는거다.			
+			* 주로 저장작업, 변경작업, 삭제작업을 한 이후에는 리다이렉트 응답을 제공한다.
+
+		* 주요 메서드
+			- 리다이렉트 관련
+		     **** void sendRedirect(String location)
+			- 응답컨텐츠 관련
+			* void setContentType(String contentType)
+			* void setContentLength(long len)
+			- 응답헤더 관련
+			  void setHeader(String name, String value)
