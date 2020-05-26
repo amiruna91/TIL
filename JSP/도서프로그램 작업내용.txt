@@ -206,3 +206,65 @@
 		획득된 글번호에 해당하는 게시글 정보 조회  --> Board
 		획득된 글번호의 게시글과 관련 댓글 전부 조회 --> List<Reply>
 		HTML 컨텐츠 응답제공 <--- Book 상세정보화면과 같은 모양으로 구성
+
+게시글 검색 요청
+	요청URL 
+		/bookstore/board/list.jsp?searchOption=검색조건&searchKeyword=검색어
+	요청방식
+		GET
+	요청파라미터
+		searchOption, searchKeyword
+	jsp의 수행작업
+		요청파라미터 획득
+		전달받은 검색옵션과 검새키워드로 게시글 정보를 조회하고,
+		HTML 컨텐츠로 응답제공
+게시글 삭제 요청
+	요청URL
+		/bookstore/board/del.jsp?boardno=23
+	요청방식
+		GET
+	요청파라미터
+		boardno
+	jsp의 수행작업
+		요청파라미터 획득
+		전달받은 글번호에 해당하는 글의 del_yn을 y로 변경하고,
+		재요청URL(list.jsp)을 응답으로 제공
+게시글 수정화면 요청
+	요청URL
+		/bookstore/board/modifyform.jsp?boardno=23
+	요청방식
+		GET
+	요청파라미터
+		boardno, error(optional)
+	jsp의 수행작업
+		요청파라미터 획득
+		전달받은 글번호에 해당하는 글의 정보를 조회하고, 입력폼에 값을 표시한 다음
+		HTML 컨텐츠로 응답제공
+게시글 수정 요청
+	요청URL
+		/bookstore/board/update.jsp
+	요청방식
+		POST
+	요청파라미터
+		boardno, title, writer, content, password
+	jsp의 수행작업
+		요청파라미터 획득
+		글번호에 해당하는 글정보를 조회한다.
+		조회한 글의 비밀번호와 요청파라미터로 획득한 비밀번호가 다른 경우
+			재요청URL(modifyform.jsp?boardno=23&error=pwd)을 응답으로 제공
+		조회한 글의 비밀번호와 요청파라미터로 획득한 비밀번호가 일치하는 경우
+			위에서 조회한 글정보를 요청파라미터로 전달받은 값으로 바꾼다음 
+			BoardDao.updateBoard(Board board)를 호출해서 글정보를 변경한다.
+			재요청URL(detail.jsp?boardno=23)을 응답으로 제공
+댓글 등록 요청
+	요청URL
+		/bookstore/board/replyregister.jsp
+	요청방식
+		POST
+	요청파라미터
+		boardno, writer, content
+	jsp의 수행작업
+		요청파라미터 획득
+		Reply객체를 생성해서 획득한 정보 저장
+		BoardDao의 insertReply(Reply reply)를 호출에서 댓글정보 DB에 저장
+		재요청URL(detail.jsp?boardno=23)을 응답으로 제공
