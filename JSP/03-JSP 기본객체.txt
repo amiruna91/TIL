@@ -71,3 +71,57 @@ JSP 기본객체
 			* void setContentLength(long len)
 			- 응답헤더 관련
 			  void setHeader(String name, String value)
+
+	- 세션객체 
+		* HttpSession의 구현객체다.
+		* session변수가 참조한다.
+		* 클라이언트(브라우져)마다  하나씩 생성되는 객체다.
+		* 클라이언트의 개인적인 정보를 저장할 수 있다.
+
+	- 어플리케이션 객체
+		* ServletContext의 구현객체다.
+		* application변수가 참조한다.
+		* 웹애플리케이션 프로젝트 당 하나씩 생성되는 객체다.
+		* 웹서버가 시작되면 생성되고, 웹서버가 중단될 때 까지 유지된다.
+		* 모든 서블릿, 모든 JSP, 모든 클라이언트가 공유하는 값을 저장할 수 있다.
+		* 주요 메소드
+			String getInitParameter(String name)
+				- web.xml에 설정된 초기화 파라미터값을 반환한다.
+			String getRealPath(String path)
+				- 웹 애플리케이션 내의 특정 경로에 해당하는 시스템상의 실제 경로를 반환한다.
+			URL getResource(String path)
+				- 웹 애플리케이션 내의 특정 경로에 해당하는 시스템상의 실제 경로를 URL객체로 반환
+		 	InputStream getResourceAsStream(String path)
+				- 웹 애플리케이션 내의 특정 경로에 해당하는 시스템상의 실제 자원을 읽어올 수 있는 스트림을 반환한다.
+
+	- 페이지컨텍스트 객체
+		* PageContext의 구현객체다.
+		* pageContext변수가 참조한다.
+		* JSP 페이지마다 하나씩 생성되는 객체다.
+		* JSP 페이지에 대한  정보를 담고 있다.
+		* 다른 기본객체를 조회하는 기능이 제공된다.
+		* 주요 메소드
+			 HttpServletRequest getRequest()
+				- 해당 jsp 실행시 전달받은 요청객체를 반환한다.
+			 HttpServletRequest getResponse()
+				- 해당 jsp 실행시 전달받은 응답객체를 반환한다.
+			 HttpSession getSession()
+				- 해당 jsp 실행을 요청한 브라우저와 연관한 세션객체를 반환한다.
+			 ServletContext getServletContext()
+				- 해당 jsp가 포함된 웹 프로젝트와 관련된 애플리케이션 객체를 반환한다.
+			 ServletConfig getServletConfig()
+				- 해당 jsp와 직접 연관된 Config객체를 반환한다.
+			 JspWriter getOut()
+				- 해당 jsp의 실행을 요청한 클라이언트로 html컨텐츠를 출력하는 스트림을 반환한다.
+			 Exception getException()
+				- 오류 정보를 담고 있는 예외 객체를 반환한다.
+			 Object getPage()
+				- 현재 실행중인 jsp객체 자기자신을 반환한다.
+			*  위의 메소드를 jsp에서 실제로 사용할 가능성은 0%다.
+			*  위의 메소드를 실행해서 획득되는 객체는 jsp 실행시 이미 request, response, session,
+			   application, config, out, exception, page에 저장되어 있기 때문이다.
+	- 서블릿컨피그 객체
+		* ServletConfig의 구현객체다.
+		* config변수가 참조한다.
+		* 서블릿객체마다 하나씩 생성되는 객체다.
+		* 해당 서블릿객체만 사용할 설정정보를 담고있다.
