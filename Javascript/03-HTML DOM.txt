@@ -34,7 +34,7 @@ DOM의 주요 API
 				* html문서의 모든 쿠키들을 name/value의 쌍으로 반환한다
 			doctype
 				* html문서의 형식을 문자열로 반환한다.
-		- Method
+		- 주요 메서드
 			createElement("태그명")
 				* 지정된 태그명의 Element 객체 생성한다.
 			createAttribute("속성명", "속성값")
@@ -85,40 +85,40 @@ DOM의 주요 API
 			selectedIndex
 				* select Element의 현재 선택된 옵션의 인덱스를 조회/변경할 수 있다.
 			
-		- Method
-			getElementsByTagName("태그명")
-			getElementsByClassName("클래스")
-			querySelector("선택자")
-			querySelectorAll("선택자")
-				* Document객체에 정의된 기능과 동일한다.
-				* 단, 문서전체가 아닌 해당 Element 객체 하위에서 검색한다.
-				
-			appendChild(Element)
-				* 지정된 엘리먼트를 맨 마지막 자식노드로 추가한다.
-			removeChild(Element)
-				* 지정된 엘리먼트를 삭제한다.
-			insertBefore(Element)
-				* 지정된 엘리먼트를 첫 번째 자식노드로 추가한다.
-			remove()
-				* 엘리먼트를 삭제한다.
-
-			firstChild(), firstElementChild()
-				* 해당 엘리먼트의 첫번째 자식 엘리먼트를 반환한다.
-			lastChild(), lastElementChild()
-				* 해당 엘리먼트의 마지막 자식 엘리먼트를 반환한다.
-			previousSibling(), previousElementSibling()
-				* 해당 엘리먼트의 형제 중 바로 앞에 위치한 엘리먼트를 반환한다.
-			nextSibling(), nextElementSibling()
-				* 해당 엘리먼트의 형제 중 바로 뒤에 위치한 엘리먼트를 반환한다.
-			parentNode()
-				* 해당 엘리먼트의 부모 엘리먼트를 반환한다.
-
-			getAttribute("속성명")
-				* 지정된 속성명에 해당하는 속성값을 반환한다.
-			setAttribute("속성명", "속성값")
-				* 속성을 변경/추가한다.
-			removeAttribute("속성명")
-				* 속성을 삭제한다.
+		- 주요 메서드
+			* 자식 엘리먼트 조회
+				getElementsByTagName("태그명")
+				getElementsByClassName("클래스")
+				querySelector("선택자")
+				querySelectorAll("선택자")
+					* Document객체에 정의된 기능과 동일한다.
+					* 단, 문서전체가 아닌 해당 Element 객체 하위에서 검색한다.
+			* 자식 엘리먼트 추가/삭제	
+				appendChild(Element)
+					* 지정된 엘리먼트를 맨 마지막 자식노드로 추가한다.
+				removeChild(Element)
+					* 지정된 엘리먼트를 삭제한다.
+				insertBefore(Element)
+					* 지정된 엘리먼트를 첫 번째 자식노드로 추가한다.
+				remove()
+					* 엘리먼트를 삭제한다.
+				firstChild(), firstElementChild()
+					* 해당 엘리먼트의 첫번째 자식 엘리먼트를 반환한다.
+				lastChild(), lastElementChild()
+					* 해당 엘리먼트의 마지막 자식 엘리먼트를 반환한다.
+				previousSibling(), previousElementSibling()
+					* 해당 엘리먼트의 형제 중 바로 앞에 위치한 엘리먼트를 반환한다.
+				nextSibling(), nextElementSibling()
+					* 해당 엘리먼트의 형제 중 바로 뒤에 위치한 엘리먼트를 반환한다.
+				parentNode()
+					* 해당 엘리먼트의 부모 엘리먼트를 반환한다.
+			* 속성값 조회/추가.변경/삭제
+				getAttribute("속성명")
+					* 지정된 속성명에 해당하는 속성값을 반환한다.
+				setAttribute("속성명", "속성값")
+					* 속성을 변경/추가한다.
+				removeAttribute("속성명")
+					* 속성을 삭제한다.
 	- HTMLCollection 객체
 		- Property
 			length
