@@ -1,0 +1,53 @@
+스프링의 데이터베이스 엑세스 처리
+	* 스프링은 다양한 데이터베이스 엑세스 기술을 지원한다.
+		- spring-jdbc, ibatis, mybatis, jpa, hibernate 등의 
+		  데이터베이스 엑세스 기술을 지원하거나, 해당 기술과의 연동을 지원한다.
+	* Template 기반의 클래스를 지원한다.
+		- 데이터베이스 엑세스 작업을 할 때 전처리작업과 후처리 작업이 미리 구현되어 있는
+		  메소드를 제공한다. 개발자는 SQL과 파라미터값, 응답결과 처리만 구현하면 된다.
+	* 데이터베이스 엑세스 작업 중 오류가 발생하면 SQLException이 발생하게 되는데, 
+          발생된 SQLException 대신 DataAccessException 을 던진다.
+	  - SQLException
+		* checked 예외
+		* 예외처리 혹은 위임을 반드시 해야 한다.
+		* 오류 상황에 맞는 적절한 예외클래스를 제공하지 않는다.
+              	  (거의 모든 오류 상황에 대해서 SQLException을 발생시키고, 오류 코드만 표시된다.)
+	  - DataAccessException
+		* unchecked 예외 
+		* 예외처리를 강제하지 않는다.
+		* 오류 상황에 맞는 다양한 DataAccessException의 하위 클래스를 제공한다.
+	* javax.sql.DataSource 인터페이스를 구현한 Connection Pool을 스프링을 빈으로 등록해야 한다.
+	  - 어떤 DB Access 기술을 사용하던지 데이터베이스와의 연결은 Connection Pool이 제공하는
+            Connection을 이용한다.
+	  - Connection Pool을 사용함으로써 일관된 방식으로 Connection을 획득할 수 있다.
+	  - DB Access 작업의 실행 속도도 향상된다.
+	* 선언적 트랜잭션 처리를 지원한다.
+	  - 트랜잭션 처리를 코드의 구현없이 간단한 설정만으로 필요한 곳에 적용시킬 수 있다.
+
+Spring JDBC
+	* Java의 JDBC을 단순화시킨 데이터베이스 엑세스 기술이다.
+	* 데이터베이스에 대한 CRUD 기능을 제공하는 JdbcTemplate 클래스를 활용한다.
+		int	update(String sql, Object... args)
+				INSERT, UPDATE, DELETE sql을 실행한다.
+		T	queryForObject(String sql,  RowMapper<T> rowmapper, Object... args)
+				SELECT sql으 실행한다.
+				반드시 한 건의 데이터가 조회되어야 한다.
+		List<T>	list(String sql, Rowmapper<T> rompper, Object... args)
+				Select sql을 실행한다.
+				여러 건의 데이터를 조회한다.
+	* 구현 절차
+		1. pom.xml에 의존성 추가
+			spring-context, spring-jdbc, jdbc driver
+		2. 어플리케이션 설정 파일 추가
+			src/main/resource/META-INF/config/application.properties
+			* DB 연결 정보 설정
+		3. Spring Bean Configuration  파일 추가
+			src/main/resource/META-INF/spring/context.xml
+		4. Spring Bean Configuration 파일에 Connection Pool 빈으로 등록하기
+			* 개발할 때는 DriverManagerDataSource를 스프링 빈으로 등록하기
+			* DB 연결정보는 application.properties로부터 읽어온다.
+			  <context:property-placeholder location="설정파일 경로 및 파일명" />
+		5. CRUD 기능을 포함하고 있는 JdbcTemplate를 스프링 빈으로 등록하기
+			* CRUD작업시 필요한 Connection 획득을 위해서 Connection Pool빈을 참조해야 한다.
+		6. 각각의 테이블에 대해서 데이터 엑세스 작업이 구현된 xxxDaoImpl을 스프링의 빈으로 등록
+			* CRUD작업의 실행을 위해서 JdbcTemplate빈을 참조해야 한다.
