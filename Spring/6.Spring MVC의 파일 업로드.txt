@@ -1,0 +1,62 @@
+Spring MVC의 파일 업로드
+	* pom.xml에 라이브러리 의존성 추가
+		commons-fileupload
+	* spring bean configuration 파일에 MultipartResolver 빈 등록하기
+		<bean id="multipartResolver"
+			class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		</bean>
+		* maxUploadSize, maxUploadSizePerFile, uploadTempDir 등의 프로퍼티를 설정할 수 있다.
+	* xxxForm 객체에 MultipartFile 필드 추가하기
+		<input type="file" name="upfile"> 이면
+		입력폼의 값을 저장하는 xxxForm객체에 MultipartFile 타입의 변수 선언
+		(변수명은 입력폼의 name속성의 값과 동일한 이름으로 지정한다.)
+		public class xxxForm {
+			private MultipartFile upfile;
+			// getter/setter 추가
+		}
+	* 첨부파일을 저장할 폴더 생성
+		c:/files/free-board
+	* WEB-INF/spring/mvc.properties 파일 생성
+		directory.save.freeboard=c:/files/free-board
+	* context-mvc.xml에서 mvc.properties 파일 읽기
+		<context:property-placeholder location="/WEB-INF/spring/mvc.properties"/>
+	* 파일 업로드요청을 처리하는 컨트롤러 구현하기
+		@Controller
+		public class FreeBoardController {
+
+			// 첨부파일을 저장할 경로를 주입받기
+			@Value("${directory.save.freeboard}")
+			private String saveDirectory;
+			
+			@RequestMapping("/add.do")
+			public String addBoard(BoardForm boardForm) throws Exception {
+		
+				Board board = new Board();
+				// title, writer, content, password 값이 boardForm에서 board로 복사된다.
+				BeanUtils.copyProperties(boardForm, board);
+		
+				// 첨부파일을 지정된 폴더에 저장하기
+				MultipartFile upfile = boardForm.getUpfile();
+				if (!upfile.isEmpty()) {	// MultiFile객체에 첨부파일이 존재하는지 확인하기
+					// 첨부파일 이름 조회하기
+					String filename = upfile.getOriginalFilename();
+
+					// 첨부파일을 저장할 디렉토리와 파일명을 가진 File객체 생성하기
+					File file = new File(saveDirectory, filename);
+					
+					// 서버로 업로드된 첨부팡리을 지정된 곳에 복사하기
+					FileCopyUtils.copy(upfile.getBytes(), file); 	// 1번 방법
+					FileCopyUtils.copy(upfile.getInputStream(), 	
+							   new FileOutputStream(file));	// 2번 방법
+					
+					// 첨부파일명을 DB에 저장하기 위해서 VO객체에 담기
+					board.setFilename(filename);
+				}
+				
+				boardService.addNewBoard(board);
+		
+				return "redirect:list.do";
+			}
+		}
+
+		
