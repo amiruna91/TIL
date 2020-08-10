@@ -1,0 +1,22 @@
+컨트롤러의 요청 핸들러 메서드에서 사용가능한 반환값과 매개변수
+	- 매개변수
+		Model, ModelMap		- 뷰에 전달할 데이터를 저장하는 객체
+		RedirectAttributes	- 리다이렉트 경로에 추가할 쿼리스트링 값을 저장하는 객체
+		BindingResult		- 유효성 검증 결과가 바인딩
+		SessionStatus		- @SessionAttribute로 세션에 저장된 값을 클리어
+		HttpServletRequest, HttpservletResponse, HttpSession
+		@RequestParam		- 매개변수에 바인딩할 요청파라미터 이름 지정
+		@PathVariable		- 요청URI 경로의 파라미터값과 바인딩
+		@ModelAttribute		- Model에 지정된 이름으로 객체를 저장
+		@Valid			- 유효성 검증
+		@RequestBody		- 요청메세지의 Body의 내용과 바인딩
+
+		기본자료형		- 요청파라미터값이 바인딩
+		사용자정의 클래스	- 요청파라미터값이 바인딩
+
+	- 반환값
+		String			- 뷰의 이름(JSP 페이지 이름)
+		사용자정의 클래스	- JSON, XML 응답
+		ResponseEntity<?>		- 응답메세지의 헤더, 바디정보를 저장하는 객체
+		ModelAndView		- 뷰에 전달할 데이터와 데이터를 적절한 타입의 
+					  컨텐츠로 변환하는 뷰객체를 저장하는 객체
